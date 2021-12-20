@@ -1,4 +1,4 @@
-from pros import pros_
+from a_process import pros_
 
 COMPILER = 'rustc'
 NAME = 'test/test'

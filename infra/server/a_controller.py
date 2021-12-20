@@ -1,6 +1,6 @@
 # pylint: disable=import-error
-from formatting import format_
-from rustlib import compile_, run_
+from a_formatter import format_
+from a_rustlib import compile_, run_
 
 STE='stderr'
 STO='stdout'
