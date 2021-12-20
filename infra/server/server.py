@@ -13,14 +13,17 @@ class Server(BaseHTTPRequestHandler):
         self.wfile.write(internal())
 
     def do_POST(self):
+        response_headers = dict([parse_header(header) for header in self.headers.as_string().split('\n')])
+
+        
         self.send_response(201)
         self.end_headers()
-        #print(self.headers)
-        content_length = self.headers.as_string().split('\n')
-        print(content_length)
-
-        self.wfile.write(self.rfile.read(10))
+        self.wfile.write(self.rfile.read(headers.get('Content-Length')))
         #self.wfile.write(internal())
+
+def parse_header(header):
+    sp = header.split(':')
+    return (sp[0].strip(), sp[1].strip())
 
 """
 """
