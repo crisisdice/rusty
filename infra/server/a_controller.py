@@ -48,5 +48,5 @@ def rust_toolchain():
 
 if __name__ == '__main__':
     print(internal_post(b'\x7b\x22\x61\x22\x3a\x30\x7d'))
-    print(rust_toolchain())
+    #print(rust_toolchain())
 
