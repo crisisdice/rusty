@@ -7,7 +7,7 @@ def get_config(path):
         return decode(config.read())
 
 def parse_args():
-    path = '../infra/config.json'
+    path = '../infra/client/config.json'
 
     if '--config' in sys.argv:
         # What is config, and what is arguments?
