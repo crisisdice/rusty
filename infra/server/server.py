@@ -19,24 +19,24 @@ class Server(BaseHTTPRequestHandler):
         try:
             self.send_code(201)
 
-            response_headers = dict([parse_header(header) for header in self.headers.as_string().split('\n') if header != ''])
-            #print(self.headers.as_string().split('\n'))
+            response_headers = self.headers_as_dict()
             self.wfile.write(self.rfile.read(int(response_headers.get('Content-Length'))))
-            #self.wfile.write(self.rfile.read(10))
             #self.wfile.write(internal())
+
         except Exception as err:
+            # TODO logging
             print(err)
             self.send_code(500)
 
-def parse_header(header):
-    sp = header.split(':')
-
-    return (sp[0].strip(), sp[1].strip())
+    def headers_as_dict(self):
+        kvp = lambda p : (p[0].strip(), p[1].strip())
+        parse_header = lambda header : kvp(header.split(':'))
+        return dict([parse_header(header) for header in self.headers.as_string().split('\n') if header != ''])
 
 """
 """
 def run(server_class=HTTPServer, handler_class=Server, port=PORT):
-    # TODO logging, configuration
+    # TODO configuration
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)
     print(f'Listening on {port}...')
