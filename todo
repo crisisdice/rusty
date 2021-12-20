@@ -1,0 +1,18 @@
+set up rust language server
+
+  - write server code
+    - JSON charset to hex bytes dictionary
+
+    - write tornado controller
+    - finish rust lib
+    - configure server logging
+
+  - deploy code
+    - set up server user
+
+
+set up cold wallet and interface
+
+maintainence 
+
+  - clean laptop
