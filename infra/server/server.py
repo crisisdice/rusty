@@ -1,8 +1,12 @@
-from ios import internal
+# pylint: disable=import-error
+from controller import internal_get, internal_post
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 PORT=8080
 
+"""
+    TODO
+"""
 class Server(BaseHTTPRequestHandler):
     def __init__(self, request, client_addr, server):
         super().__init__(request, client_addr, server)
@@ -13,15 +17,14 @@ class Server(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self.send_code(200)
-        self.wfile.write(internal())
+        self.wfile.write(internal_get())
 
     def do_POST(self):
         try:
             self.send_code(201)
-
-            response_headers = self.headers_as_dict()
-            self.wfile.write(self.rfile.read(int(response_headers.get('Content-Length'))))
-            #self.wfile.write(internal())
+            #response_headers = self.headers_as_dict()
+            request = self.rfile.read(int(self.headers_as_dict().get('Content-Length')))
+            self.wfile.write(internal_post(request))
 
         except Exception as err:
             # TODO logging
