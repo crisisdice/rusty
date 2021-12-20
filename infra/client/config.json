@@ -1,0 +1,13 @@
+{
+  "url": "http://raspberrypi:8080",
+  "template": {
+      "channel": "stable",
+      "mode": "debug",
+      "edition": "2021",
+      "crateType": "bin",
+      "tests": false,
+      "code": null,
+      "backtrace": false
+  }
+}
+
