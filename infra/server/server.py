@@ -7,7 +7,7 @@ class Server(BaseHTTPRequestHandler):
     def __init__(self, request, client_addr, server):
         super().__init__(request, client_addr, server)
 
-    def send_code(seld, code):
+    def send_code(self, code):
         self.send_response(code)
         self.end_headers()
 
@@ -17,11 +17,11 @@ class Server(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
-            response_headers = dict([parse_header(header) for header in self.headers.as_string().split('\n')])
-
             self.send_code(201)
-            self.wfile.write(self.rfile.read(headers.get('Content-Length')))
-           #self.wfile.write(internal())
+
+            response_headers = dict([parse_header(header) for header in self.headers.as_string().split('\n')])
+            self.wfile.write(self.rfile.read(response_headers.get('Content-Length')))
+            #self.wfile.write(internal())
         except Exception as err:
             print(err)
             self.send_code(500)
