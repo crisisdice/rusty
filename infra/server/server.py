@@ -22,7 +22,7 @@ class Server(BaseHTTPRequestHandler):
             self.send_code(201)
             self.wfile.write(self.rfile.read(headers.get('Content-Length')))
            #self.wfile.write(internal())
-        catch Exception as err:
+        except Exception as err:
             print(err)
             self.send_code(500)
 
