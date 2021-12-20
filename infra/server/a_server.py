@@ -28,8 +28,7 @@ class Server(BaseHTTPRequestHandler):
             self.send_code(201)
             content_length = int(self.headers_as_dict().get('Content-Length'))
             request = self.rfile.read(content_length)
-            #self.wfile.write(internal_post(request))
-            self.wfile.write(request)
+            self.wfile.write(internal_post(request))
 
         except Exception as err:
             print(err)

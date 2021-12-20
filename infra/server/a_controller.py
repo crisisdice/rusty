@@ -1,3 +1,5 @@
+from json import loads as to_dict
+
 # pylint: disable=import-error
 from a_formatter import format_
 from a_rustlib import compile_, run_
@@ -24,7 +26,14 @@ def internal_get():
             "stdout" | "stderr": string
         }'
 """
-def internal_post():
+def internal_post(byts):
+    json = to_json(byts)
+    return json 
+
+def to_json(data):
+    return to_dict(data.decode('utf8'))
+
+def rust_toolchain():
     compiler_output, compiler_ok = compile_()
 
     if not compiler_ok:
@@ -38,4 +47,6 @@ def internal_post():
     return format_(runtime_output, STO)
 
 if __name__ == '__main__':
-    print(internal_get())
+    print(internal_post(b'\x7b\x22\x61\x22\x3a\x30\x7d'))
+    print(rust_toolchain())
+
