@@ -8,13 +8,13 @@ class Server(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.end_headers()
         self.wfile.write(internal())
 
     def do_POST(self):
         self.send_response(201)
         self.end_headers()
-        self.wfile.write(internal())
+        self.wfile.write(self.rfile)
+        #self.wfile.write(internal())
 
 """
 """
