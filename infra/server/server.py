@@ -7,19 +7,24 @@ class Server(BaseHTTPRequestHandler):
     def __init__(self, request, client_addr, server):
         super().__init__(request, client_addr, server)
 
-    def do_GET(self):
-        self.send_response(200)
+    def send_code(seld, code):
+        self.send_response(code)
         self.end_headers()
+
+    def do_GET(self):
+        self.send_code(200)
         self.wfile.write(internal())
 
     def do_POST(self):
-        response_headers = dict([parse_header(header) for header in self.headers.as_string().split('\n')])
+        try:
+            response_headers = dict([parse_header(header) for header in self.headers.as_string().split('\n')])
 
-        
-        self.send_response(201)
-        self.end_headers()
-        self.wfile.write(self.rfile.read(headers.get('Content-Length')))
-        #self.wfile.write(internal())
+            self.send_code(201)
+            self.wfile.write(self.rfile.read(headers.get('Content-Length')))
+           #self.wfile.write(internal())
+        catch Exception as err:
+            print(err)
+            self.send_code(500)
 
 def parse_header(header):
     sp = header.split(':')
