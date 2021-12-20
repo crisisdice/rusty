@@ -1,0 +1,13 @@
+{
+  "url": "https://play.rust-lang.org/execute",
+  "template": {
+      "channel": "stable",
+      "mode": "debug",
+      "edition": "2021",
+      "crateType": "bin",
+      "tests": false,
+      "code": null,
+      "backtrace": false
+  }
+}
+
