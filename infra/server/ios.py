@@ -4,7 +4,7 @@ from subprocess import Popen, PIPE
 EMPTY = b''
 COMPILER = 'rustc'
 NAME = 'temp'
-EXT = '.rs'
+EXT = 'rs'
 
 def format_err(err):
     return f'{{ "stderr": {err.decode("utf8")} }}'.encode('utf8')
