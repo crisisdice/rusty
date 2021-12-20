@@ -7,10 +7,10 @@ NAME = 'temp'
 EXT = '.rs'
 
 def format_err(err):
-    return f'{{ "stderr": {err.decode("utf8")} }}'
+    return f'{{ "stderr": {err.decode("utf8")} }}'.encode('utf8')
 
 def format_out(out):
-    return f'{{ "stdout": {out.decode("utf8")} }}'
+    return f'{{ "stdout": {out.decode("utf8")} }}'.encode('utf8')
 
 """
 """
