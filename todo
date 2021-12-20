@@ -1,18 +1,15 @@
 set up rust language server
 
   - write server code
+    - write responses
     - configure server logging
 
-  - test deployment
-
   - deploy code
-    - set up server user
-
+    - set up server user / permissions
 
 set up cold wallet and interface
 
 maintainence 
-
   - clean laptop
 
 misc

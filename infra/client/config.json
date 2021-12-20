@@ -1,5 +1,5 @@
 {
-  "url": "https://play.rust-lang.org/execute",
+  "url": "http://raspberrypi:8080",
   "template": {
       "channel": "stable",
       "mode": "debug",
