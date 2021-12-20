@@ -19,10 +19,10 @@ class Server(BaseHTTPRequestHandler):
         try:
             self.send_code(201)
 
-            #response_headers = dict([parse_header(header) for header in self.headers.as_string().split('\n')])
-            print(self.headers.as_string().split('\n'))
-            #self.wfile.write(self.rfile.read(response_headers.get('Content-Length')))
-            self.wfile.write(self.rfile.read(10))
+            response_headers = dict([parse_header(header) for header in self.headers.as_string().split('\n') if header != ''])
+            #print(self.headers.as_string().split('\n'))
+            self.wfile.write(self.rfile.read(response_headers.get('Content-Length')))
+            #self.wfile.write(self.rfile.read(10))
             #self.wfile.write(internal())
         except Exception as err:
             print(err)
