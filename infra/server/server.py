@@ -1,4 +1,4 @@
-from io import internal
+from ios import internal
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 class Server(BaseHTTPRequestHandler):
