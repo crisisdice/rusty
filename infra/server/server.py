@@ -13,6 +13,7 @@ class Server(BaseHTTPRequestHandler):
     def do_POST(self):
         self.send_response(201)
         self.end_headers()
+        print(self.headers)
         self.wfile.write(self.rfile.read(10))
         #self.wfile.write(internal())
 
