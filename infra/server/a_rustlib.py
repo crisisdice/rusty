@@ -1,7 +1,7 @@
 from pros import pros_
 
 COMPILER = 'rustc'
-NAME = 'test'
+NAME = 'test/test'
 EXT = 'rs'
 
 """

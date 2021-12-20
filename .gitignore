@@ -1,2 +1,2 @@
 infra/**/__pycache__/
-infra/server/test
+infra/server/test/test
