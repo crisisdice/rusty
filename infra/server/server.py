@@ -1,4 +1,4 @@
-from subprocess import Popen, PIPE
+from io import internal
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 class Server(BaseHTTPRequestHandler):
@@ -14,33 +14,12 @@ class Server(BaseHTTPRequestHandler):
         self.send_response(405)
         self.end_headers()   
 
-### internal ###
-"""
-"""
-def internal():
-    #bts = b'\x61\x6c\x65\x78'
-    #process = subprocess.Popen(['./example'],#, 'More output'],
-    #process = Popen(['rustc', 'example.rs'],
-    # TODO return stderr if not empty from rustc
-    # TODO return stdout and stderr of executable
-
-    process = Popen(['echo', 'hello world'],
-                stdout=PIPE, 
-                stderr=PIPE)
-
-    stdout, stderr = process.communicate()
-
-    print(f'{stdout}, {stderr}')
-
-    return stdout
-
-### run server ###
 """
 """
 def run(server_class=HTTPServer, handler_class=Server, port=8080):
+    # TODO logging, configuration
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)
-    #print("Starting httpd on port {}...".format(port))
     httpd.serve_forever()
 
 if __name__ == "__main__":
