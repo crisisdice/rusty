@@ -1,8 +1,9 @@
 from a_process import pros_
 
 COMPILER = 'rustc'
-NAME = 'test/hello'
+DIR = 'test/'
 EXT = 'rs'
+OUT = f'--out-dir={DIR}'
 
 """
     compile test.rs
@@ -10,8 +11,8 @@ EXT = 'rs'
         returns:
             pros_(string[])
 """
-def compile_():
-    return pros_([COMPILER, f'{NAME}.{EXT}', f'-o {NAME}'])
+def compile_(name):
+    return pros_([COMPILER, f'{DIR}{name}.{EXT}', OUT])
 
 """
     run ./test
@@ -19,10 +20,10 @@ def compile_():
         returns:
             pros_(string[])
 """
-def run_():
-    return pros_([f'./{NAME}'])
+def run_(name):
+    return pros_([f'./{DIR}{name}'])
 
 if __name__ == '__main__':
-    compile_()
-    print(run_())
+    compile_('hello')
+    print(run_('hello'))
 

@@ -25,10 +25,16 @@ class Server(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
-            self.send_code(201)
             content_length = int(self.headers_as_dict().get('Content-Length'))
             request = self.rfile.read(content_length)
-            self.wfile.write(internal_post(request))
+            result = internal_post(request)
+
+            if not result:
+                self.send_code(400)
+                return
+
+            self.send_code(201)
+            self.wfile.write(result)
 
         except Exception as err:
             print(err)
