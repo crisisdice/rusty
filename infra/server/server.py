@@ -2,7 +2,7 @@ import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # pylint: disable=import-error
-from a_controller import internal_get, internal_post
+from controller import internal_get, internal_post
 
 PORT=8000
 

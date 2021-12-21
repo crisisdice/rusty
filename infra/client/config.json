@@ -1,7 +1,4 @@
 {
-  "url": "http://raspberrypi:8000",
-  "template": {
-      "code": null
-  }
+  "url": "http://raspberrypi:8000"
 }
 

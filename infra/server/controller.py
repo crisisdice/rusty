@@ -1,8 +1,8 @@
 from json import loads as to_dict, dumps as to_string, JSONDecodeError
 
 # pylint: disable=import-error
-from a_formatter import format_
-from a_rustlib import compile_, run_
+from formatter import format_
+from rustlib import compile_, run_
 
 STE='stderr'
 STO='stdout'

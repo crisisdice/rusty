@@ -1,4 +1,5 @@
-from a_process import pros_
+# pylint: disable=import-error
+from process import pros_
 
 COMPILER = 'rustc'
 EXT = 'rs'

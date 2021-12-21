@@ -6,6 +6,7 @@ def get_config(path):
     with open(path) as config:
         return decode(config.read())
 
+# TODO - parse args
 def parse_args():
     path = '../infra/client/config.json'
 
