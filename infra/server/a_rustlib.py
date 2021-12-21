@@ -11,7 +11,7 @@ EXT = 'rs'
             pros_(string[])
 """
 def compile_():
-    return pros_([COMPILER, f'{NAME}.{EXT}'])
+    return pros_([COMPILER, f'{NAME}.{EXT}', f'-o {NAME}'])
 
 """
     run ./test
