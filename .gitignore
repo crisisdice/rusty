@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 **/__pycache__/
 server/temp*
 server/hello
+=======
+infra/**/__pycache__/
+infra/server/temp*
+infra/server/hello
+>>>>>>> release
