@@ -1,3 +1,4 @@
+from json import dumps as to_string
 
 """
     format bytes to JSON
@@ -13,7 +14,7 @@
 """
 def format_(byts, tty=None):
     return ('{}' if (tty != 'stdout' and tty != 'stderr') else
-        f'{{ "{tty}": "{byts.decode("utf8").strip()}" }}'.encode('utf8')
+        f'{{ "{tty}": {to_string(byts.decode("utf8"))} }}'.encode('utf8')
     )
 
 if __name__ == '__main__':
