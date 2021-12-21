@@ -20,3 +20,4 @@ def format_(byts, tty=None):
 if __name__ == '__main__':
     print(format_(b'\x61\x73\x73', 'stdout'))
     print(format_(b'\x62\x61\x6c\x6c\x73', 'stderr'))
+
