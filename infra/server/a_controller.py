@@ -1,4 +1,4 @@
-from json import loads as to_dict, dumps as to_string
+from json import loads as to_dict, dumps as to_string, JSONDecodeError
 
 # pylint: disable=import-error
 from a_formatter import format_
@@ -36,7 +36,7 @@ def internal_post(byts):
 
         return rust_toolchain()
 
-    except KeyError or ValueError as err:
+    except (KeyError, JSONDecodeError, ValueError) as err:
         print(err)
         return False
 
