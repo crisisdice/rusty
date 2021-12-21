@@ -1,29 +1,29 @@
 from a_process import pros_
 
 COMPILER = 'rustc'
-DIR = 'test/'
 EXT = 'rs'
-OUT = f'--out-dir={DIR}'
 
 """
-    compile test.rs
-    ---------------
-        returns:
-            pros_(string[])
+    params:
+        name: string
+
+    returns:
+        pros_(string[])
 """
 def compile_(name):
-    return pros_([COMPILER, f'{DIR}{name}.{EXT}', OUT])
+    return pros_([COMPILER, f'{name}.{EXT}'])
 
 """
-    run ./test
-    ---------------
-        returns:
-            pros_(string[])
+    params:
+        name: string
+
+    returns:
+        pros_(string[])
 """
 def run_(name):
-    return pros_([f'./{DIR}{name}'])
+    return pros_([f'./{name}'])
 
 if __name__ == '__main__':
-    compile_('hello')
+    compile_('test/hello')
     print(run_('hello'))
 

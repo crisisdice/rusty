@@ -31,7 +31,7 @@ def internal_post(byts):
     try:
         json = to_dict(byts.decode('utf8'))
 
-        with open(f'test/{NAME}.rs', 'w') as data:
+        with open(f'{NAME}.rs', 'w') as data:
             data.write(str(json['code']))
 
         return rust_toolchain()
