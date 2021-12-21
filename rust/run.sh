@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 "../infra/client/main.py" "../rust/$1"
+python3 "../client/main.py" "../rust/$1"
