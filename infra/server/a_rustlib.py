@@ -1,7 +1,7 @@
 from a_process import pros_
 
 COMPILER = 'rustc'
-NAME = 'test/test'
+NAME = 'test/hello'
 EXT = 'rs'
 
 """
