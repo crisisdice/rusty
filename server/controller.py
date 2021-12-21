@@ -22,6 +22,9 @@ def internal_get():
 """
     POST /
     ------
+    params:
+        byts: byte[]
+
     returns:
         json: '{
             "stdout" | "stderr": string
@@ -40,6 +43,12 @@ def internal_post(byts):
         print(err)
         return False
 
+"""
+    returns:
+        json: '{
+            "stdout" | "stderr": string
+        }'
+"""
 def rust_toolchain():
     compiler_output, compiler_ok = compile_(NAME)
 
@@ -58,7 +67,3 @@ if __name__ == '__main__':
         source = to_string(code.read())
         payload = f'{{ "code": {source} }}'.encode('utf8')
         print(internal_post(payload))
-
-    #print(internal_post(b'\x7b\x22\x63\x6f\x64\x65\x22\x3a\x22\x7b\x7d\x22\x7d'))
-    #print(rust_toolchain())
-

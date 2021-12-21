@@ -32,9 +32,8 @@ def pros_(args):
 
 """
 def io():
-    process = Popen(['echo', 'hello world'],
-                stdout=PIPE, 
-                stderr=PIPE)
+    args = ['echo', 'hello world']
+    process = Popen(args, stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
     print(f'NO ERROR: { stderr == EMPTY }')
     return stdout
