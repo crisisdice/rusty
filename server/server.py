@@ -52,6 +52,8 @@ class Server(BaseHTTPRequestHandler):
 def main(server_class=HTTPServer, handler_class=Server, port=PORT):
     # TODO logging
     # TODO configuration
+    # TODO better error handling
+    # TODO security
     print(sys.argv)
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)
