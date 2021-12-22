@@ -1,45 +1,23 @@
-from json import loads as to_dict, dumps as to_string, JSONDecodeError
-
 # pylint: disable=import-error
-from formatter import format_
+from const import STDOUT, STDERR
 from rustlib import compile_, run_
+from bytelib import get_code_, format_
 
-STE='stderr'
-STO='stdout'
 NAME='temp'
 
-"""
-    GET /
-    -----
-    returns:
-        json: '{
-            "healty": boolean
-        }'
-"""
 def internal_get():
+    """Handles GET requests."""
     return '{ "healthy": true }'
 
-"""
-    POST /
-    ------
-    params:
-        byts: byte[]
-
-    returns:
-        json: '{
-            "stdout" | "stderr": string
-        }'
-"""
 def internal_post(byts):
+    """Handles POST requests."""
     try:
-        json = to_dict(byts.decode('utf8'))
-
-        with open(f'{NAME}.rs', 'w') as data:
-            data.write(str(json['code']))
+        with open(f'{NAME}.rs', 'wb') as data:
+            data.write(get_code_(byts))
 
         return rust_toolchain()
 
-    except (KeyError, JSONDecodeError, ValueError) as err:
+    except (ValueError, Exception) as err:
         print(err)
         return False
 
@@ -53,17 +31,15 @@ def rust_toolchain():
     compiler_output, compiler_ok = compile_(NAME)
 
     if not compiler_ok:
-        return format_(compiler_output, STE)
+        return format_(compiler_output, STDERR)
 
     runtime_output, runtime_ok = run_(NAME)
 
     if not runtime_ok:
-        return format_(runtime_output, STE)
+        return format_(runtime_output, STDERR)
 
-    return format_(runtime_output, STO)
+    return format_(runtime_output, STDOUT)
 
 if __name__ == '__main__':
-    with open('./test/hello.rs') as code:
-        source = to_string(code.read())
-        payload = f'{{ "code": {source} }}'.encode('utf8')
-        print(internal_post(payload))
+    with open('./test/hello.json', 'rb') as code:
+        print(internal_post(code.read()))
