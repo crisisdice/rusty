@@ -1,5 +1,6 @@
 **/__pycache__/
-server/temp*
+temp.rs
+temp
 server/hello
 venv/
 rusty.egg-info/
