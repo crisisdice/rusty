@@ -8,7 +8,7 @@ def get_config(path):
 
 # TODO - parse args
 def parse_args():
-    path = '../client/config.json'
+    path = '../rusty/client/config.json'
 
     if '--config' in sys.argv:
         # What is config, and what is arguments?

@@ -2,22 +2,27 @@ from rusty.lib.const import ESC, CONTROL
 
 def get_(byts, node):
     """Return JSON element 'node'."""
-    search_after = byts.index(node) + len(node) + 1
-    bytelist = to_list_(byts[search_after:])
-    end_quote = False
-    start_index = 0
-    end_index = 0
-    
-    for index, byte in enumerate(bytelist):
-        non_escape_quote = byte == b'"' and bytelist[index-1] != CONTROL
+    try:
+        search_after = byts.index(node) + len(node) + 1
+        bytelist = to_list_(byts[search_after:])
+        end_quote = False
+        start_index = 0
+        end_index = 0
+        
+        for index, byte in enumerate(bytelist):
+            non_escape_quote = byte == b'"' and bytelist[index-1] != CONTROL
 
-        if non_escape_quote and end_quote:
-            end_index = index
-            break
-        if non_escape_quote:
-            start_index = index + 1
-            end_quote = True
-    return concatenate_bytes_(bytelist[start_index:end_index])
+            if non_escape_quote and end_quote:
+                end_index = index
+                break
+            if non_escape_quote:
+                start_index = index + 1
+                end_quote = True
+
+        return concatenate_bytes_(bytelist[start_index:end_index])
+
+    except ValueError:
+        return
 
 def to_list_(byts):
     return [byts[i:i+1] for i in range(len(byts))]
@@ -28,6 +33,9 @@ def concatenate_bytes_(byte_array):
 
 def unescape_(byts):
     """Simultaneously convert escapes to UTF-8 characters."""
+    if not byts:
+        return
+
     reverse_escape = {ESC[node]: node for node in ESC}
     bytelist = to_list_(byts)
 

@@ -1,12 +1,12 @@
-from json import loads as to_dict
 from requests import post
 
 # pylint: disable=import-error
 from inputs import parse_args, get_config
+from rusty.lib.json import get_, unescape_
+from rusty.lib.const import STDOUT, STDERR
 
 def parse_rust(res):
-    json = to_dict(res)
-    return json.get('stdout') or json.get('stderr') or json
+    return unescape_((get_(res, STDOUT.encode())) or get_(res, STDERR.encode()) or res).decode()
 
 def main():
     # setup
@@ -15,7 +15,7 @@ def main():
 
     with open(path) as data:
         # send
-        response = post(config['url'], json={"code": data.read()}).text
+        response = post(config['url'], json={"code": data.read()}).content
 
         # interpret
         print(parse_rust(response))

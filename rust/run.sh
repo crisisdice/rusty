@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 "../client/main.py" "../rust/$1"
+python3 "../rusty/client/main.py" "../rust/$1"
