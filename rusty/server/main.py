@@ -27,6 +27,7 @@ class Server(BaseHTTPRequestHandler):
 
             if not result:
                 self.send_code(400)
+                self.wfile.write(b'{ "error": true }')
                 return
 
             self.send_code(201)
