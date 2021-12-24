@@ -1,9 +1,4 @@
-# pylint: disable=import-error
-from const import STDOUT, STDERR, ESC, CONTROL
-
-def get_code_(byts):
-    """Return 'code' JSON element."""
-    return unescape_(get_(byts, b'code'))
+from rusty.lib.const import ESC, CONTROL
 
 def get_(byts, node):
     """Return JSON element 'node'."""
@@ -50,30 +45,3 @@ def unescape_(byts):
 def escape_(byts):
     """Escape JSON special chars in bytes."""
     return concatenate_bytes_([ESC[char] if char in ESC else char for char in to_list_(byts)])
-
-def format_(byts, tty=None):
-    """Insert bytes into JSON byte template.
-    
-    Keyword arguments:
-        byts -- unescaped bytes
-        tty -- 'stdout' or 'stderr'
-    """
-    if tty not in [STDOUT, STDERR]:
-        raise ValueError('tty should be stdout or stderr')
-
-    encoded_tty = b'err' if tty == STDERR else b'out'
-
-    return concatenate_bytes_([b'{ "std', encoded_tty, b'" : "', escape_(byts), b'" }'])
-
-if __name__ == '__main__':
-    with open('./test/hello.rs', 'rb') as code:
-        p_string = lambda step, b: print(f'{step}: {b.decode("utf8")}')
-        escaped   = escape_(code.read())
-        p_string('escaped', escaped)
-        json      = format_(escaped, 'stdout')
-        p_string('json', json)
-        text      = get_(json, b'stdout')
-        p_string('text', text)
-        unescaped = unescape_(text)
-        p_string('unescaped', unescaped)
-

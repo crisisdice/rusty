@@ -1,7 +1,7 @@
 # pylint: disable=import-error
-from const import STDOUT, STDERR
-from rustlib import compile_, run_
-from bytelib import get_code_, format_
+from rusty.lib.const import STDOUT, STDERR
+from rust import compile_, run_
+from formatting import get_code_, format_
 
 NAME='temp'
 
@@ -36,5 +36,5 @@ def rust_toolchain():
     return format_(runtime_output, STDOUT)
 
 if __name__ == '__main__':
-    with open('./test/hello.json', 'rb') as code:
+    with open('rusty/server/test/hello.json', 'rb') as code:
         print(internal_post(code.read()))
