@@ -1,39 +1,61 @@
 # pylint: disable=import-error
-from const import STDOUT, STDERR
-
-ESC = {
-    b'\x08' : b'\x5c\x62', # BACKSPACE
-    b'\x0c' : b'\x5c\x66', # FORM_FEED
-    b'\x0a' : b'\x5c\x6e', # NEW_LINE 
-    b'\x0d' : b'\x5c\x72', # CARRIAGE 
-    b'\x09' : b'\x5c\x74', # TAB      
-    b'\x22' : b'\x5c\x22', # DOUBLE_QT
-    b'\x2f' : b'\x5c\x2f'  # BACKSLASH
-}
+from const import STDOUT, STDERR, ESC, CONTROL
 
 def get_code_(byts):
-    clean = lambda b: b.strip()[1:-1]
-    kvp = [ clean(byt) for byt in clean(byts).split(b':')]
+    """Return 'code' JSON element."""
+    return unescape_(get_(byts, b'code'))
 
-    if kvp[0] != b'code':
-        raise ValueError('Code element not found.')
+def get_(byts, node):
+    """Return JSON element 'node'."""
+    search_after = byts.index(node) + len(node) + 1
+    bytelist = to_list_(byts[search_after:])
+    end_quote = False
+    start_index = 0
+    end_index = 0
+    
+    for index, byte in enumerate(bytelist):
+        non_escape_quote = byte == b'"' and bytelist[index-1] != CONTROL
 
-    return kvp[1]
+        if non_escape_quote and end_quote:
+            end_index = index
+            break
+        if non_escape_quote:
+            start_index = index + 1
+            end_quote = True
+    return concatenate_bytes_(bytelist[start_index:end_index])
+
+def to_list_(byts):
+    return [byts[i:i+1] for i in range(len(byts))]
 
 def concatenate_bytes_(byte_array):
+    """Concatenate a list of bytes."""
     return b''.join(byte_array)
+
+def unescape_(byts):
+    """Simultaneously convert escapes to UTF-8 characters."""
+    reverse_escape = {ESC[node]: node for node in ESC}
+    bytelist = to_list_(byts)
+
+    for index, byte in enumerate(bytelist):
+        if index == len(bytelist) - 1:
+            break
+        if byte == CONTROL:
+            joined = CONTROL + bytelist[index+1]
+            if joined in reverse_escape:
+                bytelist[index] = None
+                bytelist[index+1] = reverse_escape[joined]
+
+    return concatenate_bytes_([byte for byte in bytelist if byte is not None])
 
 def escape_(byts):
     """Escape JSON special chars in bytes."""
-    # TODO iterate over bytes or convert tables to int
-    escaped_byts = [ESC[char] if char in ESC else char for char in [byts[i:i+1] for i in range(len(byts))]]
-    return concatenate_bytes_(escaped_byts)
+    return concatenate_bytes_([ESC[char] if char in ESC else char for char in to_list_(byts)])
 
 def format_(byts, tty=None):
     """Insert bytes into JSON byte template.
     
     Keyword arguments:
-        byts -- unescaped json bytes
+        byts -- unescaped bytes
         tty -- 'stdout' or 'stderr'
     """
     if tty not in [STDOUT, STDERR]:
@@ -44,8 +66,14 @@ def format_(byts, tty=None):
     return concatenate_bytes_([b'{ "std', encoded_tty, b'" : "', escape_(byts), b'" }'])
 
 if __name__ == '__main__':
-    p_string = lambda b: print(b.decode('utf8'))
-    p_string(format_(b'good', 'stdout'))
-    p_string(format_(b'bad', 'stderr'))
-    p_string(format_(b'\x61\x0a\x0a\x61', 'stdout'))
+    with open('./test/hello.rs', 'rb') as code:
+        p_string = lambda step, b: print(f'{step}: {b.decode("utf8")}')
+        escaped   = escape_(code.read())
+        p_string('escaped', escaped)
+        json      = format_(escaped, 'stdout')
+        p_string('json', json)
+        text      = get_(json, b'stdout')
+        p_string('text', text)
+        unescaped = unescape_(text)
+        p_string('unescaped', unescaped)
 

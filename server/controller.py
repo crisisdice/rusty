@@ -12,8 +12,8 @@ def internal_get():
 def internal_post(byts):
     """Handles POST requests."""
     try:
-        with open(f'{NAME}.rs', 'wb') as data:
-            data.write(get_code_(byts))
+        with open(f'{NAME}.rs', 'wb') as code_file:
+            code_file.write(get_code_(byts))
 
         return rust_toolchain()
 
@@ -21,13 +21,8 @@ def internal_post(byts):
         print(err)
         return False
 
-"""
-    returns:
-        json: '{
-            "stdout" | "stderr": string
-        }'
-"""
 def rust_toolchain():
+    """Compile <NAME>.rs and run NAME binary, returning output or stderr."""
     compiler_output, compiler_ok = compile_(NAME)
 
     if not compiler_ok:

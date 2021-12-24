@@ -4,24 +4,12 @@ from process import pros_
 COMPILER = 'rustc'
 EXT = 'rs'
 
-"""
-    params:
-        name: string
-
-    returns:
-        pros_(string[])
-"""
 def compile_(name):
+    """Compile a txt file or return stderr."""
     return pros_([COMPILER, f'{name}.{EXT}'])
 
-"""
-    params:
-        name: string
-
-    returns:
-        pros_(string[])
-"""
 def run_(name):
+    """Run binary."""
     return pros_([f'./{name}'])
 
 if __name__ == '__main__':
