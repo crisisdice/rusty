@@ -2,16 +2,12 @@ import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # pylint: disable=import-error
-from a_controller import internal_get, internal_post
+from controller import internal_get, internal_post
 
 PORT=8000
 
-"""
-    _____________________________
-    subclasses:
-        0: BaseHTTPRequestHandler
-"""
 class Server(BaseHTTPRequestHandler):
+    """Serves a health check and rust language compilation."""
     def __init__(self, request, client_addr, server):
         super().__init__(request, client_addr, server)
 
@@ -45,13 +41,12 @@ class Server(BaseHTTPRequestHandler):
         parse_header = lambda header : kvp(header.split(':'))
         return dict([parse_header(header) for header in self.headers.as_string().split('\n') if header != ''])
 
-"""
-    start server
-    ------------
-"""
 def main(server_class=HTTPServer, handler_class=Server, port=PORT):
+    """Start server."""
     # TODO logging
     # TODO configuration
+    # TODO better error handling
+    # TODO security
     print(sys.argv)
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)

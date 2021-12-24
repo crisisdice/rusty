@@ -3,17 +3,8 @@ from subprocess import Popen
 EMPTY = b''
 PIPE = -1
 
-"""
-    spawn a process
-    ---------------
-    params:
-        args: string[]
-    
-    returns:
-        (output, status_ok): (byte[], boolean)
-"""
 def pros_(args):
-    # start and pipe process
+    """Spawn a process."""
     process = Popen(args, stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
 
@@ -24,17 +15,10 @@ def pros_(args):
     # return status object
     return (output, status_ok)
 
-"""
-    tests gnu/echo
-    --------------
-    returns:
-        stdout: bytes[]
-
-"""
 def io():
-    process = Popen(['echo', 'hello world'],
-                stdout=PIPE, 
-                stderr=PIPE)
+    """Test echo builtin."""
+    args = ['echo', 'hello world']
+    process = Popen(args, stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
     print(f'NO ERROR: { stderr == EMPTY }')
     return stdout
